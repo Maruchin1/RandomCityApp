@@ -28,6 +28,7 @@
             android:focusable="true"
             android:foreground="?selectableItemBackground"
             android:onClick="@{() -> viewModel.showCityDetails(item)}"
+            app:cardBackgroundColor="@color/item_background"
             app:cardElevation="4dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,7 +45,8 @@
                     app:layout_constraintBottom_toTopOf="@id/emissionDate"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:textCityColor="@{item.color}" />
 
                 <TextView
                     android:id="@+id/emissionDate"

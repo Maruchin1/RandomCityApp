@@ -20,10 +20,27 @@ object Binder {
         }
     }
 
-    @BindingAdapter("app:toolbarColor")
+    @BindingAdapter("app:toolbarCityColor")
     @JvmStatic
-    fun setToolbarColor(toolbar: MaterialToolbar, color: String?) {
-        val colorId = when (color) {
+    fun setToolbarCityColor(toolbar: MaterialToolbar, color: String?) {
+        val colorId = getCityColorId(color)
+        val textColorId = when (color) {
+            "Yellow", "White" -> R.color.black
+            else -> R.color.white
+        }
+        toolbar.setBackgroundColor(ContextCompat.getColor(toolbar.context, colorId))
+        toolbar.setTitleTextColor(ContextCompat.getColor(toolbar.context, textColorId))
+    }
+
+    @BindingAdapter("app:textCityColor")
+    @JvmStatic
+    fun setTextCityColor(textView: TextView, color: String?) {
+        val textColorId = getCityColorId(color)
+        textView.setTextColor(ContextCompat.getColor(textView.context, textColorId))
+    }
+
+    private fun getCityColorId(color: String?): Int {
+        return when (color) {
             "Yellow" -> R.color.yellow
             "Green" -> R.color.green
             "Blue" -> R.color.blue
@@ -32,11 +49,5 @@ object Binder {
             "White" -> R.color.white
             else -> throw IllegalStateException("Invalid color: $color")
         }
-        val textColorId = when (color) {
-            "Yellow", "White" -> R.color.black
-            else -> R.color.white
-        }
-        toolbar.setBackgroundColor(ContextCompat.getColor(toolbar.context, colorId))
-        toolbar.setTitleTextColor(ContextCompat.getColor(toolbar.context, textColorId))
     }
 }
