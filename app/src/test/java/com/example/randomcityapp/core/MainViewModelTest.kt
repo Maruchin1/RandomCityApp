@@ -2,7 +2,7 @@ package com.example.randomcityapp.core
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.randomcityapp.MockkTestRule
-import com.example.randomcityapp.getOrAwaitValue
+import com.example.randomcityapp.await
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
@@ -11,6 +11,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.time.LocalDateTime
 
 class MainViewModelTest {
     private val randomCitiesState: MutableStateFlow<List<RandomCity>> = MutableStateFlow(listOf())
@@ -32,8 +33,8 @@ class MainViewModelTest {
     }
 
     @Test
-    fun randomCities_InitialLoad() {
-        val cities = mainViewModel.randomCities.getOrAwaitValue()
+    fun randomCities_InitialLoad() = runBlocking {
+        val cities = mainViewModel.randomCities.await()
 
         assertThat(cities).isEmpty()
     }
@@ -41,19 +42,19 @@ class MainViewModelTest {
     @Test
     fun randomCities_CitesEmitted() = runBlocking {
         val firstCitiesFromRepo = listOf(
-            RandomCity(text = "Gdańsk", color = "Yellow"),
-            RandomCity(text = "Warszawa", color = "Green")
+            RandomCity(text = "Gdańsk", color = "Yellow", emissionDateTime = LocalDateTime.now()),
+            RandomCity(text = "Warszawa", color = "Green", emissionDateTime = LocalDateTime.now())
         )
         val secondCitiesFromRepo = listOf(
-            RandomCity(text = "Gdańsk", color = "Yellow"),
-            RandomCity(text = "Warszawa", color = "Green"),
-            RandomCity(text = "Poznań", color = "Blue"),
+            RandomCity(text = "Gdańsk", color = "Yellow", emissionDateTime = LocalDateTime.now()),
+            RandomCity(text = "Warszawa", color = "Green", emissionDateTime = LocalDateTime.now()),
+            RandomCity(text = "Poznań", color = "Blue", emissionDateTime = LocalDateTime.now()),
         )
 
         randomCitiesState.emit(firstCitiesFromRepo)
-        val firstCities = mainViewModel.randomCities.getOrAwaitValue()
+        val firstCities = mainViewModel.randomCities.await()
         randomCitiesState.emit(secondCitiesFromRepo)
-        val secondCities = mainViewModel.randomCities.getOrAwaitValue()
+        val secondCities = mainViewModel.randomCities.await()
 
         assertThat(firstCities).isEqualTo(firstCitiesFromRepo)
         assertThat(secondCities).isEqualTo(secondCitiesFromRepo)
