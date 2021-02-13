@@ -7,19 +7,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.randomcityapp.core.MainViewModel
 import com.example.randomcityapp.core.RandomCity
 import com.example.randomcityapp.databinding.ItemRandomCityBinding
 
-class RandomCitiesListAdapter(
-    private val fragment: Fragment,
-    private val source: LiveData<List<RandomCity>>
-) : RecyclerView.Adapter<RandomCitiesListAdapter.BindingViewHolder>() {
+class ListAdapter(
+    private val fragment: ListFragment,
+    private val viewModel: MainViewModel,
+) : RecyclerView.Adapter<ListAdapter.BindingViewHolder>() {
 
     private val itemsList = mutableListOf<RandomCity>()
     private val diffCallback = CitiesDiffCallback()
 
     init {
-        source.observe(fragment.viewLifecycleOwner) { updateItems(it) }
+        viewModel.randomCities.observe(fragment.viewLifecycleOwner) { updateItems(it) }
     }
 
     override fun getItemCount(): Int {
@@ -33,8 +34,7 @@ class RandomCitiesListAdapter(
     }
 
     override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {
-        val item = itemsList[position]
-        holder.bind(item, fragment)
+        holder.bind(itemsList[position])
     }
 
     private fun updateItems(newList: List<RandomCity>) {
@@ -45,14 +45,15 @@ class RandomCitiesListAdapter(
         diffResult.dispatchUpdatesTo(this)
     }
 
-    class BindingViewHolder(
+    inner class BindingViewHolder(
         private val binding: ItemRandomCityBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: RandomCity, controller: Fragment) = binding.run {
-            setVariable(BR.item, item)
-            setVariable(BR.controller, controller)
-            executePendingBindings()
+        fun bind(item: RandomCity) = binding.let {
+            it.item = item
+            it.controller = this@ListAdapter.fragment
+            it.viewModel = this@ListAdapter.viewModel
+            it.executePendingBindings()
         }
     }
 
