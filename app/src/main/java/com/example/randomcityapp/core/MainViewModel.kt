@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.map
 
 class MainViewModel(
-    private val randomCityRepo: RandomCityRepo
+    private val randomCityRepo: RandomCityRepo,
+    private val cityLocationApi: CityLocationApi
 ) : ViewModel() {
 
     val randomCities: LiveData<List<RandomCity>> = randomCityRepo.loadAll()
@@ -25,6 +27,12 @@ class MainViewModel(
 
     fun closeCityDetails() {
         _detailsCity.value = null
+    }
+
+    suspend fun getDetailsCityLocation(): LatLng? {
+        return _detailsCity.value?.let {
+            cityLocationApi.getCityLocation(it.name)
+        }
     }
 
     private fun sortCitiesAlphabetically(cities: List<RandomCity>): List<RandomCity> {

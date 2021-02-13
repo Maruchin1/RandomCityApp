@@ -1,6 +1,7 @@
 package com.example.randomcityapp
 
 import com.example.randomcityapp.core.*
+import com.example.randomcityapp.data.KtorCityLocationApi
 import com.example.randomcityapp.data.LocalRandomCityRepo
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -8,6 +9,8 @@ import org.koin.dsl.module
 val dataModule = module {
 
     single<RandomCityRepo> { LocalRandomCityRepo() }
+
+    single<CityLocationApi> { KtorCityLocationApi(get()) }
 }
 
 val coreModule = module {
@@ -18,5 +21,5 @@ val coreModule = module {
 
     single { RandomCityProducer(get(), get()) }
 
-    viewModel { MainViewModel(get()) }
+    viewModel { MainViewModel(get(), get()) }
 }

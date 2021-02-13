@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.randomcityapp.R
 import com.example.randomcityapp.core.MainViewModel
 import com.example.randomcityapp.databinding.FragmentDetailsBinding
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
@@ -46,11 +45,12 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val sydney = LatLng(-33.852, 151.211)
-        googleMap.addMarker(
-            MarkerOptions()
-                .position(sydney)
-                .title("Marker in Sydney")
-        )
+        lifecycleScope.launch {
+            viewModel.getDetailsCityLocation()?.let { city ->
+                googleMap.addMarker(MarkerOptions().position(city))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(city))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(city, 10.0f))
+            }
+        }
     }
 }
