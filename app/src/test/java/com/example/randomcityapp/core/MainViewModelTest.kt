@@ -56,7 +56,14 @@ class MainViewModelTest {
         randomCitiesState.emit(secondCitiesFromRepo)
         val secondCities = mainViewModel.randomCities.await()
 
-        assertThat(firstCities).isEqualTo(firstCitiesFromRepo)
-        assertThat(secondCities).isEqualTo(secondCitiesFromRepo)
+        assertThat(firstCities).isEqualTo(listOf(
+            firstCitiesFromRepo[0],
+            firstCitiesFromRepo[1]
+        ))
+        assertThat(secondCities).isEqualTo(listOf(
+            secondCitiesFromRepo[0],
+            secondCitiesFromRepo[2],
+            secondCitiesFromRepo[1]
+        ))
     }
 }
