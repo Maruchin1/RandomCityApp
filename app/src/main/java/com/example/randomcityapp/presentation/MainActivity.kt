@@ -1,7 +1,8 @@
-package com.example.randomcityapp
+package com.example.randomcityapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.randomcityapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
