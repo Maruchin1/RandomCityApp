@@ -32,7 +32,7 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text='@{item.text, default="City name"}'
+                    android:text='@{item.name, default="City name"}'
                     app:layout_constraintBottom_toTopOf="@id/emissionDate"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

@@ -10,7 +10,7 @@ import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-class MockkTestRule : TestWatcher() {
+class AppTestRule : TestWatcher() {
     val dispatcher = TestCoroutineDispatcher()
 
     override fun starting(description: Description?) {

@@ -5,4 +5,6 @@ import kotlinx.coroutines.flow.Flow
 interface RandomCityRepo {
 
     fun loadAll(): Flow<List<RandomCity>>
+
+    suspend fun addNew(randomCity: RandomCity)
 }

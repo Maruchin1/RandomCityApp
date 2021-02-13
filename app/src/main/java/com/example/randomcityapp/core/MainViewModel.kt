@@ -8,5 +8,6 @@ class MainViewModel(
     private val randomCityRepo: RandomCityRepo
 ) : ViewModel() {
 
+
     val randomCities: LiveData<List<RandomCity>> = randomCityRepo.loadAll().asLiveData()
 }

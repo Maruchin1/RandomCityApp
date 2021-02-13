@@ -1,7 +1,7 @@
 package com.example.randomcityapp.core
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.randomcityapp.MockkTestRule
+import com.example.randomcityapp.AppTestRule
 import com.example.randomcityapp.await
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
@@ -20,7 +20,7 @@ class MainViewModelTest {
     private lateinit var mainViewModel: MainViewModel
 
     @get:Rule
-    val mockkTestRule = MockkTestRule()
+    val appTestRule = AppTestRule()
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -42,13 +42,13 @@ class MainViewModelTest {
     @Test
     fun randomCities_CitesEmitted() = runBlocking {
         val firstCitiesFromRepo = listOf(
-            RandomCity(text = "Gdańsk", color = "Yellow", emissionDateTime = LocalDateTime.now()),
-            RandomCity(text = "Warszawa", color = "Green", emissionDateTime = LocalDateTime.now())
+            RandomCity(name = "Gdańsk", color = "Yellow", emissionDateTime = LocalDateTime.now()),
+            RandomCity(name = "Warszawa", color = "Green", emissionDateTime = LocalDateTime.now())
         )
         val secondCitiesFromRepo = listOf(
-            RandomCity(text = "Gdańsk", color = "Yellow", emissionDateTime = LocalDateTime.now()),
-            RandomCity(text = "Warszawa", color = "Green", emissionDateTime = LocalDateTime.now()),
-            RandomCity(text = "Poznań", color = "Blue", emissionDateTime = LocalDateTime.now()),
+            RandomCity(name = "Gdańsk", color = "Yellow", emissionDateTime = LocalDateTime.now()),
+            RandomCity(name = "Warszawa", color = "Green", emissionDateTime = LocalDateTime.now()),
+            RandomCity(name = "Poznań", color = "Blue", emissionDateTime = LocalDateTime.now()),
         )
 
         randomCitiesState.emit(firstCitiesFromRepo)

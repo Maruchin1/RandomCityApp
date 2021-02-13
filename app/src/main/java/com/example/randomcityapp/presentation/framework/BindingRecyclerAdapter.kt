@@ -30,7 +30,7 @@ open class BindingRecyclerAdapter<T : Any>(
 
     fun setSource(source: LiveData<List<T>>) {
         source.observe(lifecycleOwner) {
-            Log.d("MyDebug", it.toString())
+            Log.d("Adapter", it.toString())
             updateItems(it)
         }
     }
@@ -61,7 +61,7 @@ open class BindingRecyclerAdapter<T : Any>(
 
     override fun onBindViewHolder(holder: BindingViewHolder, position: Int) {
         val item = itemsList[position]
-        holder.bind(item = item, handler = controller)
+        holder.bind(item = item, controller = controller)
     }
 
     override fun getItemCount(): Int {
@@ -73,10 +73,10 @@ class BindingViewHolder(private val binding: ViewDataBinding) :
     RecyclerView.ViewHolder(binding.root) {
     val view = binding.root
 
-    fun bind(item: Any, handler: Any) {
+    fun bind(item: Any, controller: Any) {
         binding.apply {
             setVariable(BR.item, item)
-            setVariable(BR.controller, handler)
+            setVariable(BR.controller, controller)
             binding.executePendingBindings()
         }
     }
