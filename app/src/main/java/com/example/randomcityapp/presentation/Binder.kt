@@ -1,9 +1,7 @@
 package com.example.randomcityapp.presentation
 
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import com.example.randomcityapp.R
 import com.google.android.material.appbar.MaterialToolbar
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -22,15 +20,10 @@ object Binder {
 
     @BindingAdapter("app:toolbarCityColor")
     @JvmStatic
-    fun setToolbarCityColor(toolbar: MaterialToolbar, color: String?) {
-        color?.let {
-            val bgColorId = getCityColorId(it)
-            val textColorId = when (it) {
-                "Yellow", "White" -> R.color.black
-                else -> R.color.white
-            }
-            val bgColor = ContextCompat.getColor(toolbar.context, bgColorId)
-            val textColor = ContextCompat.getColor(toolbar.context, textColorId)
+    fun setToolbarCityColor(toolbar: MaterialToolbar, cityColor: String?) {
+        cityColor?.let {
+            val bgColor = ColorHelper.getCityColor(toolbar.context, it)
+            val textColor = ColorHelper.getTextColorOnCityColor(toolbar.context, it)
             toolbar.setBackgroundColor(bgColor)
             toolbar.setTitleTextColor(textColor)
             toolbar.setNavigationIconTint(textColor)
@@ -47,23 +40,10 @@ object Binder {
 
     @BindingAdapter("app:textCityColor")
     @JvmStatic
-    fun setTextCityColor(textView: TextView, color: String?) {
-        color?.let {
-            val textColorId = getCityColorId(it)
-            val textColor = ContextCompat.getColor(textView.context, textColorId)
+    fun setTextCityColor(textView: TextView, cityColor: String?) {
+        cityColor?.let {
+            val textColor = ColorHelper.getCityColor(textView.context, cityColor)
             textView.setTextColor(textColor)
-        }
-    }
-
-    fun getCityColorId(cityColor: String?): Int {
-        return when (cityColor) {
-            "Yellow" -> R.color.yellow
-            "Green" -> R.color.green
-            "Blue" -> R.color.blue
-            "Red" -> R.color.red
-            "Black" -> R.color.black
-            "White" -> R.color.white
-            else -> throw IllegalStateException("Invalid color: $cityColor")
         }
     }
 }

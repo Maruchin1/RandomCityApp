@@ -69,22 +69,8 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun observeCity() {
-        viewModel.detailsCity.observe(viewLifecycleOwner) { city ->
-            city?.let { updateStatusBarColor(it.color) }
-        }
-    }
-
-    private fun updateStatusBarColor(cityColor: String) {
-        val statusBarColorId = Binder.getCityColorId(cityColor)
-        requireActivity().window?.let {
-            val color = ContextCompat.getColor(requireContext(), statusBarColorId)
-            it.statusBarColor = color
-            it.navigationBarColor = color
-            if (cityColor in arrayOf("White", "Yellow")) {
-                it.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-            } else {
-                it.decorView.systemUiVisibility = 0
-            }
+        viewModel.detailsCity.observe(viewLifecycleOwner) {
+            ColorHelper.setSystemBarsCityColor(requireActivity(), it?.color)
         }
     }
 }
