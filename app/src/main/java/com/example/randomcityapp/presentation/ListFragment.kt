@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.randomcityapp.R
 import com.example.randomcityapp.core.view_models.MainViewModel
 import com.example.randomcityapp.databinding.FragmentListBinding
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -30,6 +32,7 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setStatusBarColor()
         adapter = ListAdapter(this, viewModel)
         binding?.run {
             citiesRecycler.adapter = adapter
@@ -39,5 +42,16 @@ class ListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    private fun setStatusBarColor() {
+        requireActivity().window?.let {
+            val color = ContextCompat.getColor(requireContext(), R.color.list_background)
+            it.statusBarColor = color
+            it.navigationBarColor = color
+            it.decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+
+        }
     }
 }

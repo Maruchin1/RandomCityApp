@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.randomcityapp.R
 import com.example.randomcityapp.core.view_models.MainViewModel
@@ -39,8 +40,8 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        setupMap()
+        observeCity()
     }
 
     override fun onDestroyView() {
@@ -51,14 +52,39 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
-        viewModel.detailsCityLocation.observe(viewLifecycleOwner, this::updateMapOnLocationChange)
+        viewModel.detailsCityLocation.observe(viewLifecycleOwner, this::updateMap)
     }
 
-    private fun updateMapOnLocationChange(location: LatLng?) {
+    private fun setupMap() {
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    private fun updateMap(location: LatLng?) {
         googleMap.clear()
         location?.let {
             googleMap.addMarker(MarkerOptions().position(it))
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10f))
+        }
+    }
+
+    private fun observeCity() {
+        viewModel.detailsCity.observe(viewLifecycleOwner) { city ->
+            city?.let { updateStatusBarColor(it.color) }
+        }
+    }
+
+    private fun updateStatusBarColor(cityColor: String) {
+        val statusBarColorId = Binder.getCityColorId(cityColor)
+        requireActivity().window?.let {
+            val color = ContextCompat.getColor(requireContext(), statusBarColorId)
+            it.statusBarColor = color
+            it.navigationBarColor = color
+            if (cityColor in arrayOf("White", "Yellow")) {
+                it.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            } else {
+                it.decorView.systemUiVisibility = 0
+            }
         }
     }
 }

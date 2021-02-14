@@ -55,15 +55,15 @@ object Binder {
         }
     }
 
-    private fun getCityColorId(color: String?): Int {
-        return when (color) {
+    fun getCityColorId(cityColor: String?): Int {
+        return when (cityColor) {
             "Yellow" -> R.color.yellow
             "Green" -> R.color.green
             "Blue" -> R.color.blue
             "Red" -> R.color.red
             "Black" -> R.color.black
             "White" -> R.color.white
-            else -> throw IllegalStateException("Invalid color: $color")
+            else -> throw IllegalStateException("Invalid color: $cityColor")
         }
     }
 }
