@@ -1,17 +1,27 @@
 package com.example.randomcityapp.core.logic
 
 import com.example.randomcityapp.core.interfaces.RandomCityRepo
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class RandomCityProducer(
     private val randomCityGenerator: RandomCityGenerator,
     private val randomCityRepo: RandomCityRepo
 ) {
 
-    fun startEmitting() = GlobalScope.launch {
+    private var emitJob: Job? = null
+
+    fun startEmitting() {
+        if (emitJob == null) {
+            emitJob = launchEmitLoop()
+        }
+    }
+
+    fun stopEmitting() {
+        emitJob?.cancel()
+        emitJob = null
+    }
+
+    private fun launchEmitLoop() = GlobalScope.launch {
         while (isActive) {
             emitNextRandomCity()
             delay(INTERVAL)
