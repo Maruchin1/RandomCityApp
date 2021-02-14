@@ -1,7 +1,6 @@
 package com.example.randomcityapp
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
