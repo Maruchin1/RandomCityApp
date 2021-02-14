@@ -10,7 +10,7 @@ public class RandomCityGenerator {
     private final ArrayList<String> cities = new ArrayList<>();
     private final ArrayList<String> colors = new ArrayList<>();
 
-    private SystemUtil systemUtil;
+    private final SystemUtil systemUtil;
 
     public RandomCityGenerator(SystemUtil systemUtil) {
         this.systemUtil = systemUtil;

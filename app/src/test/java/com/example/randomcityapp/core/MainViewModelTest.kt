@@ -7,7 +7,9 @@ import com.example.randomcityapp.core.interfaces.CityLocationApi
 import com.example.randomcityapp.core.interfaces.RandomCityRepo
 import com.example.randomcityapp.core.models.RandomCity
 import com.example.randomcityapp.core.view_models.MainViewModel
+import com.google.android.gms.maps.model.LatLng
 import com.google.common.truth.Truth.assertThat
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -61,14 +63,90 @@ class MainViewModelTest {
         randomCitiesState.emit(secondCitiesFromRepo)
         val secondCities = mainViewModel.randomCities.await()
 
-        assertThat(firstCities).isEqualTo(listOf(
-            firstCitiesFromRepo[0],
-            firstCitiesFromRepo[1]
-        ))
-        assertThat(secondCities).isEqualTo(listOf(
-            secondCitiesFromRepo[0],
-            secondCitiesFromRepo[2],
-            secondCitiesFromRepo[1]
-        ))
+        assertThat(firstCities).isEqualTo(
+            listOf(
+                firstCitiesFromRepo[0],
+                firstCitiesFromRepo[1]
+            )
+        )
+        assertThat(secondCities).isEqualTo(
+            listOf(
+                secondCitiesFromRepo[0],
+                secondCitiesFromRepo[2],
+                secondCitiesFromRepo[1]
+            )
+        )
+    }
+
+    @Test
+    fun detailsCity() = runBlocking {
+        val selectedRandomCity = RandomCity(
+            name = "Gdańsk",
+            color = "Yellow",
+            emissionDateTime = LocalDateTime.now()
+        )
+
+        val initialDetailsCity = mainViewModel.detailsCity.await()
+        mainViewModel.selectDetailsCity(selectedRandomCity)
+        val selectedDetailsCity = mainViewModel.detailsCity.await()
+
+        assertThat(initialDetailsCity).isNull()
+        assertThat(selectedDetailsCity).isEqualTo(selectedDetailsCity)
+    }
+
+    @Test
+    fun isDetailsCitySelected() {
+        val selectedRandomCity = RandomCity(
+            name = "Gdańsk",
+            color = "Yellow",
+            emissionDateTime = LocalDateTime.now()
+        )
+
+        val initialIsDetailsCitySelected = mainViewModel.isDetailsCitySelected()
+        mainViewModel.selectDetailsCity(selectedRandomCity)
+        val detailsCitySelected = mainViewModel.isDetailsCitySelected()
+
+        assertThat(initialIsDetailsCitySelected).isFalse()
+        assertThat(detailsCitySelected).isTrue()
+    }
+
+    @Test
+    fun detailsCityLocation() = runBlocking {
+        val selectedRandomCity = RandomCity(
+            name = "Gdańsk",
+            color = "Yellow",
+            emissionDateTime = LocalDateTime.now()
+        )
+        val cityLocationFromApi = LatLng(50.0, 100.0)
+        coEvery { cityLocationApi.getCityLocation(selectedRandomCity.name) } returns cityLocationFromApi
+
+        val initialDetailsCityLocation = mainViewModel.detailsCityLocation.await()
+        mainViewModel.selectDetailsCity(selectedRandomCity)
+        val selectedDetailsCityLocation = mainViewModel.detailsCityLocation.await()
+
+        assertThat(initialDetailsCityLocation).isNull()
+        assertThat(selectedDetailsCityLocation).isEqualTo(cityLocationFromApi)
+    }
+
+    @Test
+    fun displayMode() = runBlocking {
+        mainViewModel.setDisplayMode(MainViewModel.DisplayMode.STANDARD)
+        val firstDisplayMode = mainViewModel.displayMode.await()
+        mainViewModel.setDisplayMode(MainViewModel.DisplayMode.SIDE_BY_SIDE)
+        val secondDisplayMode = mainViewModel.displayMode.await()
+
+        assertThat(firstDisplayMode).isEqualTo(MainViewModel.DisplayMode.STANDARD)
+        assertThat(secondDisplayMode).isEqualTo(MainViewModel.DisplayMode.SIDE_BY_SIDE)
+    }
+
+    @Test
+    fun getDisplayMode() = runBlocking {
+        mainViewModel.setDisplayMode(MainViewModel.DisplayMode.STANDARD)
+        val firstDisplayMode = mainViewModel.getDisplayMode()
+        mainViewModel.setDisplayMode(MainViewModel.DisplayMode.SIDE_BY_SIDE)
+        val secondDisplayMode = mainViewModel.getDisplayMode()
+
+        assertThat(firstDisplayMode).isEqualTo(MainViewModel.DisplayMode.STANDARD)
+        assertThat(secondDisplayMode).isEqualTo(MainViewModel.DisplayMode.SIDE_BY_SIDE)
     }
 }

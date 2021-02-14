@@ -1,7 +1,6 @@
 package com.example.randomcityapp.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +41,6 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("List", "onViewCrated")
         ColorHelper.setDefaultSystemBars(requireActivity())
         adapter = ListAdapter(this, viewModel)
         binding?.run {
@@ -52,7 +50,6 @@ class ListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("List", "onDestroyView")
         binding = null
     }
 

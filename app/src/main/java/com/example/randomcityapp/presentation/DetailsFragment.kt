@@ -1,13 +1,10 @@
 package com.example.randomcityapp.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import com.example.randomcityapp.R
 import com.example.randomcityapp.core.view_models.MainViewModel
 import com.example.randomcityapp.databinding.FragmentDetailsBinding
@@ -43,14 +40,12 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("MyDebug", "Details - onViewCreated")
         setupMapAsync()
         observeCity()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("MyDebug", "Details - onDestroyView")
         binding = null
         googleMap = null
         onMapReadyCallback = null

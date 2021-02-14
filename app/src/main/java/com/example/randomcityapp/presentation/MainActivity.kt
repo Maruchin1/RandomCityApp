@@ -56,25 +56,33 @@ class MainActivity : FragmentActivity() {
     private fun handleRotation() {
         val previousDisplayMode = viewModel.getDisplayMode()
         if (isStandardView && previousDisplayMode == MainViewModel.DisplayMode.SIDE_BY_SIDE) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                supportFragmentManager.fragments.forEach { remove(it) }
-                add(R.id.mainFragmentContainer, listFragment)
-            }
-            if (viewModel.isDetailsCitySelected()) {
-                supportFragmentManager.commit {
-                    setReorderingAllowed(true)
-                    replace(R.id.mainFragmentContainer, detailsFragment)
-                    addToBackStack(null)
-                }
-            }
+            handleChangeFromSideBySideToStandard()
         } else if (!isStandardView && previousDisplayMode == MainViewModel.DisplayMode.STANDARD) {
+            handleChangeFromStandardToSideBySide()
+        }
+    }
+
+    private fun handleChangeFromSideBySideToStandard() {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            supportFragmentManager.fragments.forEach { remove(it) }
+            add(R.id.mainFragmentContainer, listFragment)
+        }
+        if (viewModel.isDetailsCitySelected()) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                supportFragmentManager.fragments.forEach { remove(it) }
-                add(R.id.listFragmentContainer, listFragment)
-                add(R.id.detailsFragmentContainer, detailsFragment)
+                replace(R.id.mainFragmentContainer, detailsFragment)
+                addToBackStack(null)
             }
+        }
+    }
+
+    private fun handleChangeFromStandardToSideBySide() {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            supportFragmentManager.fragments.forEach { remove(it) }
+            add(R.id.listFragmentContainer, listFragment)
+            add(R.id.detailsFragmentContainer, detailsFragment)
         }
     }
 }
