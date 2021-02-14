@@ -3,6 +3,10 @@ package com.example.randomcityapp.core
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.randomcityapp.AppTestRule
 import com.example.randomcityapp.await
+import com.example.randomcityapp.core.interfaces.CityLocationApi
+import com.example.randomcityapp.core.interfaces.RandomCityRepo
+import com.example.randomcityapp.core.models.RandomCity
+import com.example.randomcityapp.core.view_models.MainViewModel
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
@@ -16,6 +20,7 @@ import java.time.LocalDateTime
 class MainViewModelTest {
     private val randomCitiesState: MutableStateFlow<List<RandomCity>> = MutableStateFlow(listOf())
     private val randomCityRepo: RandomCityRepo = mockk()
+    private val cityLocationApi: CityLocationApi = mockk()
 
     private lateinit var mainViewModel: MainViewModel
 
@@ -29,7 +34,7 @@ class MainViewModelTest {
     fun before() {
         every { randomCityRepo.loadAll() } returns randomCitiesState
 
-        mainViewModel = MainViewModel(randomCityRepo)
+        mainViewModel = MainViewModel(randomCityRepo, cityLocationApi)
     }
 
     @Test

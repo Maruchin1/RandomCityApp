@@ -2,12 +2,9 @@ package com.example.randomcityapp.data
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
-import com.example.randomcityapp.core.RandomCity
-import com.example.randomcityapp.core.RandomCityRepo
+import com.example.randomcityapp.core.models.RandomCity
+import com.example.randomcityapp.core.interfaces.RandomCityRepo
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import java.time.LocalDateTime
 
 class LocalRandomCityRepo : RandomCityRepo {
 

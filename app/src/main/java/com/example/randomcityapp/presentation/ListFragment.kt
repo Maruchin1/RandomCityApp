@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.randomcityapp.core.MainViewModel
-import com.example.randomcityapp.core.RandomCity
+import com.example.randomcityapp.core.view_models.MainViewModel
 import com.example.randomcityapp.databinding.FragmentListBinding
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 

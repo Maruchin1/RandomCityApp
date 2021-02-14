@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.example.randomcityapp.R
-import com.example.randomcityapp.core.MainViewModel
+import com.example.randomcityapp.core.view_models.MainViewModel
 import com.example.randomcityapp.databinding.FragmentDetailsBinding
 import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 
@@ -19,6 +18,11 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
 
     private val viewModel: MainViewModel by sharedViewModel()
     private var binding: FragmentDetailsBinding? = null
+    private lateinit var googleMap: GoogleMap
+
+    fun close() {
+        parentFragmentManager.popBackStack()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,15 +46,19 @@ class DetailsFragment : Fragment(), OnMapReadyCallback {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+        viewModel.clearDetailsCity()
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        lifecycleScope.launch {
-            viewModel.getDetailsCityLocation()?.let { city ->
-                googleMap.addMarker(MarkerOptions().position(city))
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(city))
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(city, 10.0f))
-            }
+        this.googleMap = googleMap
+        viewModel.detailsCityLocation.observe(viewLifecycleOwner, this::updateMapOnLocationChange)
+    }
+
+    private fun updateMapOnLocationChange(location: LatLng?) {
+        googleMap.clear()
+        location?.let {
+            googleMap.addMarker(MarkerOptions().position(it))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10f))
         }
     }
 }

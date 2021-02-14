@@ -2,13 +2,10 @@ package com.example.randomcityapp.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.library.baseAdapters.BR
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.randomcityapp.core.MainViewModel
-import com.example.randomcityapp.core.RandomCity
+import com.example.randomcityapp.core.view_models.MainViewModel
+import com.example.randomcityapp.core.models.RandomCity
 import com.example.randomcityapp.databinding.ItemRandomCityBinding
 
 class ListAdapter(

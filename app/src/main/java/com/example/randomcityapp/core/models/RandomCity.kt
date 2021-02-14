@@ -1,4 +1,4 @@
-package com.example.randomcityapp.core
+package com.example.randomcityapp.core.models
 
 import java.time.LocalDateTime
 

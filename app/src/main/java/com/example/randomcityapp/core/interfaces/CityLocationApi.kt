@@ -1,4 +1,4 @@
-package com.example.randomcityapp.core
+package com.example.randomcityapp.core.interfaces
 
 import com.google.android.gms.maps.model.LatLng
 

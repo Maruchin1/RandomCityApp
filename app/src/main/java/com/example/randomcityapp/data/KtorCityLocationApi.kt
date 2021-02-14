@@ -3,8 +3,7 @@ package com.example.randomcityapp.data
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.util.Log
-import com.example.randomcityapp.core.CityLocationApi
+import com.example.randomcityapp.core.interfaces.CityLocationApi
 import com.google.android.gms.maps.model.LatLng
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*

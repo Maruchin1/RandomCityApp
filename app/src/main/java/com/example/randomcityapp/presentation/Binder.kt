@@ -23,20 +23,36 @@ object Binder {
     @BindingAdapter("app:toolbarCityColor")
     @JvmStatic
     fun setToolbarCityColor(toolbar: MaterialToolbar, color: String?) {
-        val colorId = getCityColorId(color)
-        val textColorId = when (color) {
-            "Yellow", "White" -> R.color.black
-            else -> R.color.white
+        color?.let {
+            val bgColorId = getCityColorId(it)
+            val textColorId = when (it) {
+                "Yellow", "White" -> R.color.black
+                else -> R.color.white
+            }
+            val bgColor = ContextCompat.getColor(toolbar.context, bgColorId)
+            val textColor = ContextCompat.getColor(toolbar.context, textColorId)
+            toolbar.setBackgroundColor(bgColor)
+            toolbar.setTitleTextColor(textColor)
+            toolbar.setNavigationIconTint(textColor)
         }
-        toolbar.setBackgroundColor(ContextCompat.getColor(toolbar.context, colorId))
-        toolbar.setTitleTextColor(ContextCompat.getColor(toolbar.context, textColorId))
+    }
+
+    @BindingAdapter("app:onNavigationClick")
+    @JvmStatic
+    fun setOnNavigationClick(toolbar: MaterialToolbar, action: (() -> Unit)?) {
+        action?.let {
+            toolbar.setNavigationOnClickListener { action() }
+        }
     }
 
     @BindingAdapter("app:textCityColor")
     @JvmStatic
     fun setTextCityColor(textView: TextView, color: String?) {
-        val textColorId = getCityColorId(color)
-        textView.setTextColor(ContextCompat.getColor(textView.context, textColorId))
+        color?.let {
+            val textColorId = getCityColorId(it)
+            val textColor = ContextCompat.getColor(textView.context, textColorId)
+            textView.setTextColor(textColor)
+        }
     }
 
     private fun getCityColorId(color: String?): Int {

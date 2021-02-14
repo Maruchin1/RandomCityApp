@@ -1,4 +1,6 @@
-package com.example.randomcityapp.core;
+package com.example.randomcityapp.core.logic;
+
+import com.example.randomcityapp.core.models.RandomCity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -1,6 +1,9 @@
 package com.example.randomcityapp.core
 
 import com.example.randomcityapp.AppTestRule
+import com.example.randomcityapp.core.logic.RandomCityGenerator
+import com.example.randomcityapp.core.logic.SystemUtil
+import com.example.randomcityapp.core.models.RandomCity
 import com.google.common.truth.Truth.assertThat
 import io.mockk.every
 import io.mockk.mockk
@@ -19,7 +22,8 @@ class RandomCityGeneratorTest {
 
     @Before
     fun before() {
-        randomCityGenerator = RandomCityGenerator(systemUtil)
+        randomCityGenerator =
+            RandomCityGenerator(systemUtil)
     }
 
     @Test

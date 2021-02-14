@@ -5,7 +5,7 @@
 
         <variable
             name="item"
-            type="com.example.randomcityapp.core.RandomCity" />
+            type="com.example.randomcityapp.core.models.RandomCity" />
 
         <variable
             name="controller"
@@ -13,7 +13,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.randomcityapp.core.MainViewModel" />
+            type="com.example.randomcityapp.core.view_models.MainViewModel" />
     </data>
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,7 +27,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackground"
-            android:onClick="@{() -> viewModel.showCityDetails(item)}"
+            android:onClick="@{() -> viewModel.selectDetailsCity(item)}"
             app:cardBackgroundColor="@color/item_background"
             app:cardElevation="4dp">
 

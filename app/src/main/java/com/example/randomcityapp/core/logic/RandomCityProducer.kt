@@ -1,5 +1,6 @@
-package com.example.randomcityapp.core
+package com.example.randomcityapp.core.logic
 
+import com.example.randomcityapp.core.interfaces.RandomCityRepo
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive

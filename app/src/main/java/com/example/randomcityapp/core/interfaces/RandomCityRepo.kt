@@ -1,5 +1,6 @@
-package com.example.randomcityapp.core
+package com.example.randomcityapp.core.interfaces
 
+import com.example.randomcityapp.core.models.RandomCity
 import kotlinx.coroutines.flow.Flow
 
 interface RandomCityRepo {

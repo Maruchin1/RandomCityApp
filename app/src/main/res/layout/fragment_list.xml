@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.randomcityapp.core.MainViewModel" />
+            type="com.example.randomcityapp.core.view_models.MainViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Random City" />
+                    android:text="@string/list_title" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/citiesRecycler"
