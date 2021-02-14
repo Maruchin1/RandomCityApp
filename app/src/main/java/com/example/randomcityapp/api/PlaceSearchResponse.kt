@@ -1,4 +1,4 @@
-package com.example.randomcityapp.data
+package com.example.randomcityapp.api
 
 data class PlaceSearchResponse(val status: String, val candidates: List<PlaceCandidate>) {
 
@@ -8,9 +8,3 @@ data class PlaceSearchResponse(val status: String, val candidates: List<PlaceCan
     val firstFoundLocation: PlaceLocation
         get() = candidates.first().geometry.location
 }
-
-data class PlaceCandidate(val geometry: PlaceGeometry)
-
-data class PlaceGeometry(val location: PlaceLocation)
-
-data class PlaceLocation(val lat: Double, val lng: Double)

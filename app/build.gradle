@@ -79,6 +79,11 @@ dependencies {
     implementation "io.ktor:ktor-client-cio:$ktor_version"
     implementation "io.ktor:ktor-client-gson:$ktor_version"
 
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
     // Testing
     testImplementation "androidx.arch.core:core-testing:$core_testing_version"
     testImplementation "io.mockk:mockk:$mockk_version"

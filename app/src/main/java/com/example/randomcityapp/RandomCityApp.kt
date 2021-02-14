@@ -23,7 +23,7 @@ class RandomCityApp : Application(), LifecycleObserver {
         startKoin {
             androidLogger()
             androidContext(applicationContext)
-            modules(coreModule, dataModule)
+            modules(coreModule, databaseModule, apiModule)
         }
     }
 
