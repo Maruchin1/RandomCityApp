@@ -13,6 +13,7 @@ class MainViewModel(
 ) : ViewModel() {
 
     private val _detailsCity = MutableLiveData<RandomCity?>(null)
+    private val _displayMode = MutableLiveData<DisplayMode>()
 
     val randomCities: LiveData<List<RandomCity>> = randomCityRepo.loadAll()
         .map { sortCitiesAlphabetically(it) }
@@ -22,12 +23,22 @@ class MainViewModel(
 
     val detailsCityLocation: LiveData<LatLng?> = _detailsCity.switchMap { loadCityLocation(it) }
 
+    val displayMode: LiveData<DisplayMode> = _displayMode
+
     fun selectDetailsCity(randomCity: RandomCity) {
         _detailsCity.value = randomCity
     }
 
-    fun clearDetailsCity() {
-        _detailsCity.value = null
+    fun setDisplayMode(displayMode: DisplayMode) {
+        _displayMode.value = displayMode
+    }
+
+    fun getDisplayMode(): DisplayMode? {
+        return _displayMode.value
+    }
+
+    fun isDetailsCitySelected(): Boolean {
+        return _detailsCity.value != null
     }
 
     private fun sortCitiesAlphabetically(cities: List<RandomCity>): List<RandomCity> {
@@ -37,5 +48,9 @@ class MainViewModel(
     private fun loadCityLocation(randomCity: RandomCity?): LiveData<LatLng?> = liveData {
         val location = randomCity?.let { cityLocationApi.getCityLocation(it.name) }
         emit(location)
+    }
+
+    enum class DisplayMode {
+        STANDARD, SIDE_BY_SIDE
     }
 }

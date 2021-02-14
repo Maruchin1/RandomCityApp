@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="com.example.randomcityapp.core.view_models.MainViewModel.DisplayMode" />
+
         <variable
             name="controller"
             type="com.example.randomcityapp.presentation.DetailsFragment" />
@@ -28,8 +30,16 @@
                 app:navigationIcon="@drawable/ic_baseline_close_24"
                 app:onNavigationClick="@{() -> controller.close()}"
                 app:title='@{viewModel.detailsCity.name, default="Nazwa miasta"}'
-                app:titleTextColor="@color/white"
-                app:toolbarCityColor="@{viewModel.detailsCity.color}" />
+                app:toolbarCityColor="@{viewModel.detailsCity.color}"
+                app:visibleOrGone="@{viewModel.displayMode == DisplayMode.STANDARD}" />
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:title='@{viewModel.detailsCity.name, default="Nazwa miasta"}'
+                app:toolbarCityColor="@{viewModel.detailsCity.color}"
+                app:visibleOrGone="@{viewModel.displayMode == DisplayMode.SIDE_BY_SIDE}" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.fragment.app.FragmentContainerView

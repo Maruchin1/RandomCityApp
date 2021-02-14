@@ -8,7 +8,6 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/listFragmentContainer"
-            android:name="com.example.randomcityapp.presentation.ListFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +24,6 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/detailsFragmentContainer"
-            android:name="com.example.randomcityapp.presentation.DetailsFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

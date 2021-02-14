@@ -1,5 +1,6 @@
 package com.example.randomcityapp.presentation
 
+import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.appbar.MaterialToolbar
@@ -8,6 +9,12 @@ import java.time.format.DateTimeFormatter
 
 object Binder {
     private val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+
+    @BindingAdapter("app:visibleOrGone")
+    @JvmStatic
+    fun setVisibleOrGone(view: View, visible: Boolean?) {
+        view.visibility = if (visible == true) View.VISIBLE else View.GONE
+    }
 
     @BindingAdapter("android:text")
     @JvmStatic

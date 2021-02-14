@@ -27,7 +27,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackground"
-            android:onClick="@{() -> viewModel.selectDetailsCity(item)}"
+            android:onClick="@{() -> controller.openDetails(item)}"
             app:cardBackgroundColor="@color/item_background"
             app:cardElevation="4dp">
 

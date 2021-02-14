@@ -1,5 +1,3 @@
 <resources>
-    <string name="app_name">RandomCityApp</string>
-
-    <string name="list_title">Random City</string>
+    <string name="app_name">Random City</string>
 </resources>

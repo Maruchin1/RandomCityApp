@@ -13,6 +13,6 @@
     <color name="blue">#2196f3</color>
     <color name="red">#f44336</color>
 
-    <color name="list_background">#fafafa</color>
+    <color name="background">#fafafa</color>
     <color name="item_background">#e0e0e0</color>
 </resources>

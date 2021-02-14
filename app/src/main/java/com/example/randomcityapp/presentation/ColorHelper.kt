@@ -8,23 +8,27 @@ import com.example.randomcityapp.R
 
 object ColorHelper {
 
-    fun getCityColor(context: Context, cityColor: String?): Int {
+    fun getCityColor(context: Context, cityColor: String): Int {
         val colorResId = getCityColorResId(cityColor)
         return getColor(context, colorResId)
     }
 
-    fun getTextColorOnCityColor(context: Context, cityColor: String?): Int {
+    fun getTextColorOnCityColor(context: Context, cityColor: String): Int {
         val colorResId = getTextColorOnCityColorResId(cityColor)
         return getColor(context, colorResId)
     }
 
-    fun setSystemBarsCityColor(activity: Activity, cityColor: String?) {
+    fun setSystemBarsCityColor(activity: Activity, cityColor: String) {
         val colorResId = getCityColorResId(cityColor)
         val mode = if (isLightCityColor(cityColor)) SystemBarsMode.LIGHT else SystemBarsMode.DARK
         setSystemBarsColor(activity, colorResId, mode)
     }
 
-    fun setSystemBarsColor(activity: Activity, colorResId: Int, mode: SystemBarsMode) {
+    fun setDefaultSystemBars(activity: Activity) {
+        setSystemBarsColor(activity, R.color.background, SystemBarsMode.LIGHT)
+    }
+
+    private fun setSystemBarsColor(activity: Activity, colorResId: Int, mode: SystemBarsMode) {
         activity.window?.run {
             val color = getColor(activity, colorResId)
             statusBarColor = color
